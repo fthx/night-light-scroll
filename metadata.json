@@ -1,0 +1,16 @@
+{
+  "description": "Scroll on Night Light indicator to change temperature.\n\nVery light extension.",
+  "name": "Night Light Scroll",
+  "shell-version": [
+    "46",
+    "47",
+    "48",
+    "49"
+  ],
+  "url": "https://github.com/fthx/night-light-scroll",
+  "uuid": "night-light-scroll@fthx",
+  "version": 999,
+  "donations": {
+    "paypal": "fthx75"
+  }
+}
