@@ -22,26 +22,26 @@ const NightLightScroll = GObject.registerClass(
             this._colorSchema = new Gio.Settings({ schema_id: 'org.gnome.settings-daemon.plugins.color' })
 
             this._quickSettings = Main.panel.statusArea.quickSettings;
-            this._quickSettings?._indicators?.connectObject('notify::allocation', () => this._setIndicator(), this);
+            this._quickSettings._indicators.connectObject('notify::allocation', () => this._setIndicator(), this);
         }
 
         _setIndicator() {
-            this._indicator = this._quickSettings?._nightLight;
+            this._indicator = this._quickSettings._nightLight;
             this._indicator?.connectObject('scroll-event', (actor, event) => this._onScroll(event), this);
         }
 
         _onScroll(event) {
-            let newTemperature = this._colorSchema?.get_uint('night-light-temperature');
+            let newTemperature = this._colorSchema.get_uint('night-light-temperature');
 
             switch (event?.get_scroll_direction()) {
                 case Clutter.ScrollDirection.UP:
                     newTemperature = Math.min(MAX_TEMPERATURE, newTemperature + TEMPERATURE_STEP);
-                    this._colorSchema?.set_uint('night-light-temperature', newTemperature);
+                    this._colorSchema.set_uint('night-light-temperature', newTemperature);
                     return Clutter.EVENT_STOP;
                     break;
                 case Clutter.ScrollDirection.DOWN:
                     newTemperature = Math.max(MIN_TEMPERATURE, newTemperature - TEMPERATURE_STEP);
-                    this._colorSchema?.set_uint('night-light-temperature', newTemperature);
+                    this._colorSchema.set_uint('night-light-temperature', newTemperature);
                     return Clutter.EVENT_STOP;
                     break;
             }
@@ -52,7 +52,7 @@ const NightLightScroll = GObject.registerClass(
         destroy() {
             this._colorSchema = null;
 
-            this._quickSettings?._indicators?.disconnectObject(this);
+            this._quickSettings._indicators.disconnectObject(this);
             this._quickSettings = null;
 
             this._indicator?.disconnectObject(this);
